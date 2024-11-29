@@ -1,20 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
   <meta charset='utf-8'>
   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/jsrender.min.js"></script>
   <title>Firebase Cloud Messaging Example</title>
 </head>
 <body>
-  <div id="token-container">
-    <div>Token</div>
-    <div id="token"></div>
+<script id="token-template" type="text/x-jsrender">
+  <div class="alert alert-warning" role="alert">
+  <div>{{:tokenValue}}</div>
   </div>
-  <div id="message-container">
-    <div>Message</div>
-    <div id="message"></div>
+</script>
+<script id="message-template" type="text/x-jsrender">
+  <div class="alert alert-success" role="alert">
+    <div>{{:messageId}}</div>
+    <div>{{:from}}</div>
+    <div>{{:data.message}}</div>
+    <div>{{:data.orderId}}</div>
   </div>
 
+</script>
+<nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <span class="navbar-brand mb-0 h1">Тестирование PUSH уведомлений, отправленных через Firebase Claude Messaging</span>
+  </div>
+</nav>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12" id="token-container"></div>
+  </div>
+  <div class="row">
+    <div class="col-12" id="message-container"></div>
+  </div>
+</div>
   <script type="module">
 
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js'
@@ -38,30 +60,22 @@
     getToken(messaging, { vapidKey: publicApiKey }).then((currentToken) => {
       if (currentToken) {
         console.log(currentToken);
-        //token
+        let tokenElement = $("#token-template").render({tokenValue: currentToken});
+        $("#token-container").append(tokenElement);
       } else {
         console.log('No registration token available. Request permission to generate one.');
-        //requestPermission();
       }
     }).catch((err) => {
       console.log('An error occurred while retrieving token. ', err);
+      let tokenElement = $("#token-template").render({tokenValue: "error"});
+      $("#token-container").append(tokenElement);
     });
 
     onMessage(messaging, (payload) => {
       console.log("Message received. ", payload);
+      let messageElement = $("#message-template").render(payload);
+      $("#message-container").append(messageElement);
     });
-
-    function requestPermission() {
-      Notification.requestPermission().then((permission) => {
-        if (permission === 'granted') {
-          console.log('Notification permission granted.');
-          return;
-        }
-        console.log('Unable to get permission to notify.');
-      });
-    }
-
-    //requestPermission();
 
   </script>
 </body>
