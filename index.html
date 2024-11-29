@@ -40,7 +40,7 @@
   <script type="module">
 
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js'
-    import { getMessaging, getToken, onMessage } from 'https://www.gstatic.com/firebasejs/10.13.2/firebase-messaging.js'
+    import { getMessaging, getToken, onMessage, onBackgroundMessage } from 'https://www.gstatic.com/firebasejs/10.13.2/firebase-messaging.js'
 
     const publicApiKey = "BFZCz3Yuv1TRvTSGySRaxUTYfxIsRqLk67TewCcYgDoJ3G-RKCAycU3pWwUcRMkNSsuQV-JbQlMcFin3kVbYyCw";
 
@@ -72,6 +72,12 @@
     });
 
     onMessage(messaging, (payload) => {
+      console.log("Message received. ", payload);
+      let messageElement = $("#message-template").render(payload);
+      $("#message-container").append(messageElement);
+    });
+
+    onBackgroundMessage(messaging, (payload) => {
       console.log("Message received. ", payload);
       let messageElement = $("#message-template").render(payload);
       $("#message-container").append(messageElement);
