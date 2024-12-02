@@ -18,21 +18,21 @@
 <script id="message-template" type="text/x-jsrender">
   <div class="alert alert-success" role="alert">
     <div class="row">
-      <span class="me-3 fw-bolder col-2">Идентификатор сообщения:</span><span class="col-10">{{:messageId}}</span>
+      <span class="me-3 fw-bolder col-2">Идентификатор сообщения:</span><span class="col-8">{{:messageId}}</span>
     </div>
     <div class="row">
-      <span class="me-3 fw-bolder col-2">Заголовок сообщения:</span><span class="col-10">{{:notification.title}}</span>
+      <span class="me-3 fw-bolder col-2">Заголовок сообщения:</span><span class="col-8">{{:notification.title}}</span>
     </div>
     <div class="row">
-      <span class="me-3 fw-bolder col-2">Сообщение:</span><span class="col-10">{{:notification.body}}</span>
+      <span class="me-3 fw-bolder col-2">Сообщение:</span><span class="col-8">{{:notification.body}}</span>
     </div>
     {^{props data}}
       <div class="row">
-        <span class="me-3 fw-bolder col-2">{{>key}}:</span><span class="col-10">{{:prop}}</span>
+        <span class="me-3 fw-bolder col-2">{{>key}}:</span><span class="col-8">{{:prop}}</span>
       </div>
     {{else}}
       <div class="row">
-        <span class="fw-bolder col-12">Нет дополнительных параметров в сообщении.</span>
+        <span class="fw-bolder col-10">Нет дополнительных параметров в сообщении.</span>
       </div>
     {{/props}}
   </div>
