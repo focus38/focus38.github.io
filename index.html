@@ -17,10 +17,14 @@
 </script>
 <script id="message-template" type="text/x-jsrender">
   <div class="alert alert-success" role="alert">
-    <div>{{:messageId}}</div>
-    <div>{{:from}}</div>
-    <div>{{:data.message}}</div>
-    <div>{{:data.orderId}}</div>
+    <div><span class="me-3">Идентификатор сообщения:</span><span>{{:messageId}}</span></div>
+    <div><span class="me-3">Заголовок сообщения:</span><span>{{:notification.title}}</span></div>
+    <div><span class="me-3">Сообщение:</span><span>{{:notification.body}}</span></div>
+    {^{props data}}
+    <div><span>{{>key}}:</span><span>{{:prop}}</span></div>
+    {{else}}
+      <div>Нет дополнительных параметров в сообщении.</div>
+    {{/props}}
   </div>
 
 </script>
