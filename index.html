@@ -18,6 +18,9 @@
 <script id="message-template" type="text/x-jsrender">
   <div class="alert alert-success" role="alert">
     <div class="row">
+      <span class="me-3 fw-bolder col-2">Дата сообщения:</span><span class="col-8 text-secondary">{{:date}}</span>
+    </div>
+    <div class="row">
       <span class="me-3 fw-bolder col-2">Идентификатор сообщения:</span><span class="col-8">{{:messageId}}</span>
     </div>
     <div class="row">
@@ -86,10 +89,15 @@
     });
 
     onMessage(messaging, (payload) => {
+      payload.date = getFormattedDate();
       console.log("Message received. ", payload);
       let messageElement = $("#message-template").render(payload);
       $("#message-container").append(messageElement);
     });
+
+    function getFormattedDate() {
+      return new Date().toLocaleString("ru-ru", {timeZone: "Europe/Moscow"});
+    }
 
   </script>
 </body>
